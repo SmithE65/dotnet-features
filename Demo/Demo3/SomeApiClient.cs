@@ -1,10 +1,9 @@
-﻿namespace Demo.Demo2;
+﻿namespace Demo.Demo3;
 
 public record ApiResult(bool Success, int[] Values);
 
 public class SomeApiClient : IDisposable
 {
-    private bool _disposedValue;
     private readonly Random _random;
 
     public SomeApiClient(Random random)
@@ -13,12 +12,18 @@ public class SomeApiClient : IDisposable
         _random = random;
     }
 
-    public async Task<ApiResult> GetValuesAsync(int take)
+    public async Task<ApiResult> GetValuesAsync(
+        int take,
+        CancellationToken cancellationToken = default)
     {
-        await Task.Delay(150);
+        await Task.Delay(150, cancellationToken);
         var values = Enumerable.Range(0, take).Select(_ => _random.Next(255));
         return new(true, [.. values]);
     }
+
+    #region IDisposable
+
+    private bool _disposedValue;
 
     protected virtual void Dispose(bool disposing)
     {
@@ -49,4 +54,6 @@ public class SomeApiClient : IDisposable
         Dispose(disposing: true);
         GC.SuppressFinalize(this);
     }
+
+    #endregion
 }
