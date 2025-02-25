@@ -16,9 +16,13 @@ public static class Demo
 
         string? test1 = null;
         Console.WriteLine(test1);
+
         string test2 = null;
         Console.WriteLine(test2);
         PrintIt(test2);
+
+        string? test3 = null;
+        Console.WriteLine(test3.Length);
     }
 
     private static string? GetIt()

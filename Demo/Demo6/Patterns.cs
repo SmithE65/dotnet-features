@@ -55,6 +55,9 @@ public static class Patterns
         temperature is { Unit: Unit.F, Value: >= 212 }
         or { Unit: Unit.C, Value: >= 100 }
         or { Unit: Unit.K, Value: >= 373.1 };
+
+    public static bool IsAboveOrigin(Point p) =>
+        p is (0, 0, > 0);
 }
 
 public record Temperature(double Value, Unit Unit);
@@ -67,3 +70,17 @@ public enum Unit
 }
 
 public class NotInterestedException : NotImplementedException;
+
+public class Point
+{
+    public int X { get; set; }
+    public int Y { get; set; }
+    public int Z { get; set; }
+
+    public void Deconstruct(out int x, out int y, out int z)
+    {
+        x = X;
+        y = Y;
+        z = Z;
+    }
+}
